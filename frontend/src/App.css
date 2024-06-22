@@ -1,0 +1,179 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1 0 auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* New CSS rules for header alignment */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.search-bar input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-bar button {
+  background-color: rgb(221, 165, 228);
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Adjusting alignment of user options */
+.navbar .nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav > * {
+  margin-left: 15px;
+}
+
+/* Footer CSS */
+.footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  width: 100%;
+  position: relative;
+}
+
+.btn-custom {
+  background-color: #ff69b4;
+  color: white;
+}
+
+.btn-custom:hover {
+  background-color: #e563a4;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #c82333;
+  color: white;
+}
+
+.category-card {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-card-img {
+  margin: 10px;
+  width: 100%;
+  height: 200px; /* Altura fija para todas las imágenes */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+}
+
+.resource-page-container {
+  margin-top: 20px;
+}
+
+.resource-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* .resource-card .card-body .mt-auto {
+  margin-top: auto;
+} */
+/* .container {
+  margin-top: 20px;
+} */
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.custom-dropdown-btn {
+  background-color: #5bc0de !important; /* Azul más claro */
+  border-color: #46b8da !important; /* Borde claro */
+  padding: 0.25rem 0.5rem !important; /* Ajustar el relleno */
+  font-size: 0.75rem !important; /* Tamaño de la fuente más pequeño */
+  border-radius: 0.5rem !important; /* Bordes redondos */
+}
