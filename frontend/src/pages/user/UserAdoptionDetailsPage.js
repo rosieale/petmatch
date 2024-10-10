@@ -222,6 +222,22 @@ const UserAdoptionDetailsPage = () => {
                   <p>
                     <b>¿Tiene mucha fuerza?:</b> {pet.strength}
                   </p>
+
+                  {/* Mostrar carnet de vacunas con borde rosado */}
+                  {pet.vaccineCardUrl && (
+                    <p>
+                      <b>Carnet de vacunas:</b>{" "}
+                      <Image
+                        src={pet.vaccineCardUrl}
+                        fluid
+                        style={{
+                          border: "2px solid #ff69b4", // Borde rosado
+                          borderRadius: "8px", // Esquinas redondeadas
+                          padding: "5px", // Espacio alrededor de la imagen
+                        }}
+                      />
+                    </p>
+                  )}
                 </Col>
               </Row>
             </ListGroup.Item>

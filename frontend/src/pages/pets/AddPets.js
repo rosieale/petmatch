@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../config/axiosConfig"; // Asegúrate de que la ruta es correcta
+import axiosInstance from "../../config/axiosConfig";
 
 const AddPets = () => {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ const AddPets = () => {
   const [owner, setOwner] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
+  const [vaccineCard, setVaccineCard] = useState(null);
   const [specialCare, setSpecialCare] = useState(false);
   const [specialCareDetails, setSpecialCareDetails] = useState("");
   const [spaceRequirement, setSpaceRequirement] = useState("Ambos");
@@ -23,6 +24,10 @@ const AddPets = () => {
     setImage(e.target.files[0]);
   };
 
+  const handleVaccineCardChange = (e) => {
+    setVaccineCard(e.target.files[0]); // Manejador para el carnet de vacunas
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -32,6 +37,7 @@ const AddPets = () => {
     formData.append("owner", owner);
     formData.append("location", location);
     formData.append("image", image);
+    formData.append("vaccineCard", vaccineCard); // Añadir el carnet de vacunas
     formData.append("specialCare", specialCare);
     if (specialCare) {
       formData.append("specialCareDetails", specialCareDetails);
@@ -124,8 +130,17 @@ const AddPets = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="image">
-              <Form.Label>Imagen</Form.Label>
+              <Form.Label>Imagen de la mascota</Form.Label>
               <Form.Control type="file" onChange={handleImageChange} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="vaccineCard">
+              <Form.Label>Carnet de vacunas</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={handleVaccineCardChange}
+              />{" "}
+              {/* Nuevo input */}
             </Form.Group>
 
             <h4>Necesidades de la Mascota</h4>

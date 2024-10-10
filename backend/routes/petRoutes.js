@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Pet = require("../models/Pet");
+const Pet = require("../models/Pet"); // Importa el modelo Pet
 const {
   getPets,
   getPetById,
@@ -11,12 +11,14 @@ const {
   uploadAdoptionImage,
   rateAdoption,
 } = require("../controllers/petController");
-const { upload, uploadToS3 } = require("../middlewares/uploadMiddleware");
+const {
+  uploadMultiple,
+  uploadToS3,
+} = require("../middlewares/uploadMiddleware");
 const { protect } = require("../middlewares/authMiddleware");
 
 router.get("/search", async (req, res) => {
   const { q, page = 1, type, location } = req.query;
-  console.log("Query de búsqueda recibida:", q);
   const limit = 10;
   const skip = (page - 1) * limit;
 
@@ -39,24 +41,22 @@ router.get("/search", async (req, res) => {
     const pets = await Pet.find(query).skip(skip).limit(limit);
     const totalPets = await Pet.countDocuments(query);
     const totalPages = Math.ceil(totalPets / limit);
-    console.log("Mascotas encontradas:", pets);
     res.json({ pets, totalPages, currentPage: page });
   } catch (error) {
-    console.error("Error al buscar mascotas:", error);
     res.status(500).json({ message: error.message });
   }
 });
 
 router.get("/", getPets);
-router.post("/", protect, upload.single("image"), createPet);
+router.post("/", protect, uploadMultiple, createPet);
 router.get("/:id", getPetById);
-router.put("/edit/:id", protect, upload.single("image"), updatePet);
+router.put("/edit/:id", protect, uploadMultiple, updatePet);
 router.delete("/:id", protect, deletePet);
 router.put("/:id/complete", protect, markAdoptionAsCompleted);
 router.post(
   "/:id/upload-adoption-image",
   protect,
-  upload.single("image"),
+  uploadMultiple,
   uploadAdoptionImage
 );
 router.post("/:id/rate-adoption", protect, rateAdoption);

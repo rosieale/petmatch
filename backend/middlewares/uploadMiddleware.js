@@ -35,8 +35,8 @@ const uploadToS3 = async (file) => {
 };
 
 const uploadMultiple = upload.fields([
-  { name: "idPhoto", maxCount: 1 },
-  { name: "workProof", maxCount: 1 },
+  { name: "image", maxCount: 1 }, // Campo para la imagen de la mascota
+  { name: "vaccineCard", maxCount: 1 }, // Campo para el carnet de vacunas
 ]);
 
 module.exports = { upload, uploadToS3, uploadMultiple };

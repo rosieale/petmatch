@@ -1,6 +1,6 @@
 const Pet = require("../models/Pet");
 const User = require("../models/Users");
-const Adoption = require("../models/Adoption"); // Asegúrate de importar el modelo de adopción
+const Adoption = require("../models/Adoption");
 const { uploadToS3 } = require("../middlewares/uploadMiddleware");
 
 const getPets = async (req, res) => {
@@ -37,39 +37,61 @@ const getPetById = async (req, res) => {
   }
 };
 
+const Pet = require("../models/Pet");
+const User = require("../models/Users");
+const { uploadToS3 } = require("../middlewares/uploadMiddleware");
+
 const createPet = async (req, res) => {
   try {
+    // Verificar si el usuario es admin, si no, contar cuántas mascotas tiene
+    if (!req.user.isAdmin) {
+      const userPetsCount = await Pet.countDocuments({ owner: req.user._id });
+
+      // Si ya tiene 3 mascotas y no es admin, no permitir la creación de más
+      if (userPetsCount >= 3) {
+        return res.status(400).json({
+          message:
+            "No puedes agregar más de 3 mascotas. Contacta al administrador para más.",
+        });
+      }
+    }
+
+    // Si no ha alcanzado el límite o es admin, crear la mascota
     const {
       name,
       age,
       type,
-      owner,
       location,
       specialCare,
       specialCareDetails,
       spaceRequirement,
       attentionRequirement,
       strength,
-      rating = 1,
     } = req.body;
 
     const newPet = new Pet({
       name,
       age,
       type,
-      owner,
+      owner: req.user._id, // Asignar el dueño como el usuario actual
       location,
       specialCare,
       specialCareDetails,
       spaceRequirement,
       attentionRequirement,
       strength,
-      rating,
     });
 
-    if (req.file) {
-      const imageUrl = await uploadToS3(req.file);
+    // Subir imagen si está disponible
+    if (req.files && req.files.image) {
+      const imageUrl = await uploadToS3(req.files.image[0]);
       newPet.imageUrl = imageUrl;
+    }
+
+    // Subir carnet de vacunas si está disponible
+    if (req.files && req.files.vaccineCard) {
+      const vaccineCardUrl = await uploadToS3(req.files.vaccineCard[0]);
+      newPet.vaccineCardUrl = vaccineCardUrl;
     }
 
     await newPet.save();
@@ -82,15 +104,33 @@ const createPet = async (req, res) => {
 
 const updatePet = async (req, res) => {
   try {
+    console.log("Archivos recibidos:", req.files);
+    console.log("Datos recibidos:", req.body);
+
     const updatedPet = req.body;
-    const pet = await Pet.findByIdAndUpdate(req.params.id, updatedPet, {
-      new: true,
-    });
+    const pet = await Pet.findById(req.params.id);
+
     if (!pet) {
       return res.status(404).json({ message: "Pet not found" });
     }
-    res.status(200).json(pet);
+
+    if (req.files && req.files.image) {
+      const imageUrl = await uploadToS3(req.files.image[0]);
+      updatedPet.imageUrl = imageUrl;
+    }
+
+    if (req.files && req.files.vaccineCard) {
+      const vaccineCardUrl = await uploadToS3(req.files.vaccineCard[0]);
+      updatedPet.vaccineCardUrl = vaccineCardUrl;
+    }
+
+    const updated = await Pet.findByIdAndUpdate(req.params.id, updatedPet, {
+      new: true,
+    });
+
+    res.status(200).json(updated);
   } catch (error) {
+    console.error("Error actualizando mascota:", error);
     res.status(400).json({ message: error.message });
   }
 };

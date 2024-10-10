@@ -296,7 +296,6 @@ const RegisterPage = () => {
                 onChange={handleFileChange}
               />
             </Form.Group>
-
             <Button variant="primary" type="submit" disabled={loading}>
               {loading ? (
                 <Spinner animation="border" size="sm" />

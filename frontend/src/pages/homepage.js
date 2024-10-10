@@ -43,6 +43,8 @@ const Homepage = () => {
       navigate("/pets?type=Felino");
     } else if (category === "Recursos") {
       navigate("/resources");
+    } else if (category === "Recursos") {
+      navigate("/resources");
     }
   };
 

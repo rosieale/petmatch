@@ -1,3 +1,4 @@
+// models/Pet.js
 const mongoose = require("mongoose");
 
 const petSchema = new mongoose.Schema({
@@ -19,6 +20,9 @@ const petSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
+  },
+  vaccineCardUrl: {
+    type: String, // Nuevo campo para la URL del carnet de vacunas
   },
   location: {
     type: String,

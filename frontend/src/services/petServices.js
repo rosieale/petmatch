@@ -85,10 +85,16 @@ export const searchPets = async ({ q, type, location, page = 1 }) => {
     let queryString = `/api/pets/search?q=${q || ""}&page=${page}`;
     if (type) queryString += `&type=${type}`;
     if (location) queryString += `&location=${location}`;
+
+    console.log("Query string enviada:", queryString); // Depuración
+
     const response = await axiosInstance.get(queryString);
     return response.data;
   } catch (error) {
-    console.error("Error al buscar mascotas", error);
+    console.error(
+      "Error al buscar mascotas:",
+      error?.response?.data || error.message
+    );
     throw error;
   }
 };

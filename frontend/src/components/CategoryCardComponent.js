@@ -5,12 +5,14 @@ const CategoryCardComponent = ({ category, idx, onClick }) => {
     "/images/Puppy1.png",
     "/images/Kitties1.png",
     "/images/Animals1.png",
+    "/images/Kitties1.png",
   ];
 
   const buttonText = {
     Caninos: "Ver perros en adopción",
     Felinos: "Ver gatos en adopción",
     Recursos: "Ir a Recursos",
+    Test: "Test",
   };
 
   return (
