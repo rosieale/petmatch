@@ -177,3 +177,7 @@
   font-size: 0.75rem !important; /* Tamaño de la fuente más pequeño */
   border-radius: 0.5rem !important; /* Bordes redondos */
 }
+
+.custom-dropdown-btn .nav-link::after {
+  color: #ffffff !important; /* Change the caret color to white */
+}

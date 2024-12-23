@@ -49,9 +49,9 @@ const HeaderComponent = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown
-              title="Menú"
-              id="dropdown-item-button"
-              className="custom-dropdown-btn"
+              title={<span className="text-white">Menú</span>}
+              id="dropdown-item-button "
+              className="custom-dropdown-btn text-white"
             >
               <NavDropdown.ItemText>Elije una opción</NavDropdown.ItemText>
               <LinkContainer to="/pets">
